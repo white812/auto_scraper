@@ -39,3 +39,22 @@ def dfs_to_any(current_node, current_path, known_paths):
         next_path = get_path(current_path,current_node)
         for next_node in current_node:
             dfs_to_any(next_node, next_path, known_paths)
+
+
+
+def longestSubstringFinder(string1, string2):
+    answer = ""
+    len1, len2 = len(string1), len(string2)
+    for i in range(len1):
+        match = ""
+        for j in range(len2):
+            if (i + j < len1 and string1[i + j] == string2[j]):
+                match += string2[j]
+            else:
+                if (len(match) > len(answer)): answer = match
+                match = ""
+    return answer
+
+
+def inline_xpath_decoration(path):
+    return "single_segment_information.xpath('" + path + "')"
