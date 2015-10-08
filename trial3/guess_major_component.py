@@ -1,7 +1,6 @@
 __author__ = 'yingbozhan'
 
 
-
 def select_component_paths(guesses, component_infomration, paths_to_value, paths_to_any):
     all_possible_component_paths = set()
     total_set = set()
@@ -9,7 +8,7 @@ def select_component_paths(guesses, component_infomration, paths_to_value, paths
         total_set = guess_set.union(total_set)
     if not component_infomration.issubset(total_set):
         print "Could not Identify Enough Information For Further Guesses"
-        return None, None, None
+        return None
 
     for path in paths_to_any:
         available_infomration = set()
@@ -36,11 +35,14 @@ def guess_best_path(paths):
             if temp_path in path: counter += 1
         path_inclusion_counter[counter].add(path)
 
+    return path_inclusion_counter
+
+
+def check_unique_best_path(paths, counter):
     best = len(paths)
-    if best in path_inclusion_counter and len(path_inclusion_counter[best])==1:
-        return list(path_inclusion_counter[best])[0]
-    else:
-        return list(path_inclusion_counter)
+    if best in counter and len(counter[best])==1:
+        return True
+    return False
 
 
 def generate_best_component_paths(price_component_paths, segment_component_paths, quote_component_paths):
@@ -49,6 +51,8 @@ def generate_best_component_paths(price_component_paths, segment_component_paths
     segment_paths_inclusion = guess_best_path(segment_component_paths)
     quote_paths_inclusion = guess_best_path(quote_component_paths)
 
-    if len(price_paths_inclusion)==1 and len(segment_paths_inclusion)==1 and len(quote_paths_inclusion)==1:
+    if check_unique_best_path(price_component_paths, price_paths_inclusion) and \
+                    check_unique_best_path(segment_component_paths, segment_paths_inclusion) and\
+                    check_unique_best_path(quote_component_paths, quote_paths_inclusion):
         has_best = True
     return has_best, price_paths_inclusion, segment_paths_inclusion, quote_paths_inclusion

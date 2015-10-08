@@ -15,7 +15,6 @@ def get_inline_xpath_for_datetime(xpath_from_code, xpath_to_code, dates, times, 
         xpath_dates.append(date.replace(segment_path, '.'))
 
     if times is None:
-        if len(times)!=2: return None, None
         if len(longestSubstringFinder(xpath_from_code, xpath_dates[0])) > 0 and \
             len(longestSubstringFinder(xpath_to_code, xpath_dates[1]))>0:
             return inline_xpath_decoration(xpath_dates[0]), inline_xpath_decoration(xpath_dates[1])
@@ -23,6 +22,7 @@ def get_inline_xpath_for_datetime(xpath_from_code, xpath_to_code, dates, times, 
             len(longestSubstringFinder(xpath_to_code, xpath_dates[0]))>0:
             return inline_xpath_decoration(xpath_dates[1]), inline_xpath_decoration(xpath_dates[0])
     else:
+        if len(times)!=2: return None, None
         for time in times:
             xpath_times.append(time.replace(segment_path, '.'))
         xpath_times = list(xpath_times)
