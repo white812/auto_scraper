@@ -51,7 +51,7 @@ def get_inline_xpath_for_datetime(xpath_from_code, xpath_to_code, dates, times, 
             return date_from_str+'+'+time_from_str, date_to_str+'+'+time_to_str
 
 
-def guess_date_time(xpath, root, namespace):
+def verify_date_time(xpath, root, namespace):
     #possible results: date only, time only, date time, None.
     values = set()
     for value in root.xpath(xpath+'/text()', namespaces=namespace):
@@ -93,7 +93,7 @@ def guess_date_time(xpath, root, namespace):
 def get_xpath_for_datetime(xpath_for_datetimes, useful_path, root, segment_path, namespace):
     date_time_path_guess = [set(), set(), set(), set()]
     for xpath in xpath_for_datetimes:
-        guess_value = guess_date_time(xpath, root, namespace)
+        guess_value = verify_date_time(xpath, root, namespace)
         date_time_path_guess[guess_value].add(xpath)
 
     #todo complete time format guess
@@ -108,7 +108,7 @@ def get_xpath_for_datetime(xpath_for_datetimes, useful_path, root, segment_path,
         #try useful path
         date_time_path_guess = [set(), set(), set(), set()]
         for xpath in xpath_for_datetimes:
-            guess_value = guess_date_time(xpath, root, namespace)
+            guess_value = verify_date_time(xpath, root, namespace)
             date_time_path_guess[guess_value].add(xpath)
             if len(date_time_path_guess[GUESS_DATETIME]) >= 2:
                 return date_time_path_guess[GUESS_DATETIME], None

@@ -38,21 +38,24 @@ def guess_best_path(paths):
     return path_inclusion_counter
 
 
-def check_unique_best_path(paths, counter):
-    best = len(paths)
-    if best in counter and len(counter[best])==1:
-        return True
-    return False
+# def check_unique_best_path(paths, counter):
+#     best = len(paths)
+#     if best in counter and len(counter[best])==1:
+#         return True
+#     return False
 
 
-def generate_best_component_paths(price_component_paths, segment_component_paths, quote_component_paths):
-    has_best = False
-    price_paths_inclusion = guess_best_path(price_component_paths)
-    segment_paths_inclusion = guess_best_path(segment_component_paths)
-    quote_paths_inclusion = guess_best_path(quote_component_paths)
+def get_best_path(component_inclusions):
+    keys = sorted(component_inclusions.keys(), reverse=True)
+    for key in keys:
+        if len(component_inclusions[key])==0: continue
+        return list(component_inclusions[key])[0]
 
-    if check_unique_best_path(price_component_paths, price_paths_inclusion) and \
-                    check_unique_best_path(segment_component_paths, segment_paths_inclusion) and\
-                    check_unique_best_path(quote_component_paths, quote_paths_inclusion):
-        has_best = True
-    return has_best, price_paths_inclusion, segment_paths_inclusion, quote_paths_inclusion
+
+
+
+
+def generate_best_component_paths(component_paths):
+    if component_paths is None: return None
+    paths_inclusion = guess_best_path(component_paths)
+    return paths_inclusion

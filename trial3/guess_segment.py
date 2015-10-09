@@ -3,7 +3,7 @@ __author__ = 'yingbozhan'
 from guess_location import get_xpath_for_place_code
 from guess_datetime import get_xpath_for_datetime, get_inline_xpath_for_datetime
 from guess_flight import get_inline_xpath_flight_number
-from pprint import  pprint
+from pprint import pprint
 
 
 def generate_segment_code(guesses_value_path_dict, paths_to_any, segment_path, root, namespace):
